@@ -4,10 +4,29 @@
 릴스에서 유행하는 춤을 Pose Estimation을 통해 연습 및 대결할 수 있게 하는 기능을 제공하는 게임 시스템입니다.
 
 ### 주요 기능
-- YOLOv8-Pose Model을 사용해 사용자와 비교 영상에서 Key Point 추출
-- 추출한 Key Point로 관절 각도를 계산하여 유사도 측정
-- Key Point와 각 아바타 파츠들의 관절 좌표 값을 매칭하여 아바타 영상 생성
-- STM32와 UART 통신으로 서보모터를 조작해 사용자를 추적하는 Pan 구현
+- YOLOv8-Pose로 User / Reference video에서 Keypoint 추출
+- 추출한 Key Point로 관절 각도를 계산하여 유사도 / 점수 측정
+- Key Point - 아바타 파츠 매핑으로 아바타 영상 생성
+- STM32 + UART로 서보 모터 Pan (좌/중/우 추적)
+- 듀얼 모니터 : Control(조작) / View(무대) 분리
+
+
+### 트러블 슈팅
+1. Touch Display 터치 좌표 오류
+    - 문제 : Touch Display와 일반 Display를 동시 사용했을 때 터치 디스플레이에 터치되는 좌표 값이 정확하지 않음
+    - 원인 : 어떤 것이 Touch Display인지 알지 못하고 하나의 좌표 값으로 인식했기 때문
+    - 해결 : Xorg 기준으로 Touch Display를 특정 모니터에 매핑하여 정확한 좌표를 사용
+    - 명령 : xinput map-to-output <터치장치ID> <모니터이름> : ex) xinput map-to-output 12 HDMI-1
+
+2. 실행할 카메라 번호 오류
+    - 문제 : 카메라 케이블 재연결 후 프로그램 실행 시 입력 장치를 못 찾음
+    - 원인 : /dev/video0가 /dev/video1 등으로 장치 번호가 바뀜
+    - 해결 : 카메라 파일 번호 변경
+
+
+
+## 시연 영상
+https://github.com/user-attachments/assets/3b85f136-1a0b-4b7d-9cec-c0dcfc4e700a
 
 
 ## 구성도
@@ -41,15 +60,6 @@
 ### 카메라 Pan (STM32)
 <img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/b994d77f-d89b-4535-a556-3a9f32b39cfb" />
 <img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/5e236b3a-aa04-439d-9fdc-c2151ecf3bc1" />
-
-
-
-
-## 시연 영상
-
-
-https://github.com/user-attachments/assets/3b85f136-1a0b-4b7d-9cec-c0dcfc4e700a
-
 
 
 
